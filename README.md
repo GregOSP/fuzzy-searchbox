@@ -2,7 +2,7 @@
 
 This component creates an accessible screen-reader-friendly autocomplete combobox with fuzzy searching.
 
-Dependencies:
+Dev Dependencies:
   - Fuse.js
   - Lodash
   - node-sass
@@ -21,7 +21,17 @@ Notes:
   - This compenent requires an aria-label to be set
   - Optionally set 'placeholder' as text when the input box is empty
 
-  Sample usage:
+#Installation
+```
+$ npm i fuzzy-searchbox
+```
+
+#Sample usage
+
+```javascript
+import FuzzySearchbox from fuzzy-searchbox
+```
+
 ```html
 <FuzzySearchbox
   id="my-select"
