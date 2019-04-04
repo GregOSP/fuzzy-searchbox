@@ -206,7 +206,6 @@ export default{
       }
     },
     filterResults: function () {
-      console.log('filterResults called')
       if (this.searchTerm === '') {
         this.results = this.items
       } else {
