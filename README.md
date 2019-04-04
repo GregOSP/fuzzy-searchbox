@@ -21,6 +21,11 @@ Notes:
   - This compenent requires an aria-label to be set
   - Optionally set 'placeholder' as text when the input box is empty
 
+#Github
+```
+https://github.com/GregOSP/fuzzy-searchbox
+```
+
 #Installation
 ```
 $ npm i fuzzy-searchbox
