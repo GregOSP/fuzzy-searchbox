@@ -1,6 +1,6 @@
 {
   "name": "fuzzy-searchbox",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "",
   "main": "dist/fuzzy-searchbox.umd.js",
   "module": "dist/fuzzy-searchbox.esm.js",
