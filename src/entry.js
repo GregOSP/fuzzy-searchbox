@@ -5,7 +5,7 @@ import component from './fuzzy-searchbox.vue';
 function install(Vue) {
   if (install.installed) return;
   install.installed = true;
-  Vue.component('InputCombobox', component);
+  Vue.component('FuzzySearchbox', component);
 }
 
 // Create module definition for Vue.use()
