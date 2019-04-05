@@ -56,7 +56,7 @@
         :ref="getId(i)"
         :aria-selected="isSelected(i)"
       >
-      {{result.fuzzySearchboxLabel}}
+      {{ result.fuzzySearchboxLabel }}
       </li>
     </ul>
   </div>
@@ -133,7 +133,6 @@ export default{
       searchTerm: '',
       isLoading: false,
       arrowCounter: -1,
-      activedescendant: '',
       selectedItem: {},
       searchOptions: {
         shouldSort: true,
@@ -151,11 +150,11 @@ export default{
   mounted () {
     document.addEventListener('click', this.handleClickOutside)
     if (this.searchByLabel) {
-      this.searchOptions.keys = this.labelSearchRuleExists ? ['fuzzySearchboxSearchLabel'] : ['fuzzySearchboxLabel']
+      this.searchOptions.keys = this.labelSearchRuleExists() ? ['fuzzySearchboxSearchLabel'] : ['fuzzySearchboxLabel']
     } else {
       this.searchOptions.keys = this.itemKeys
     }
-    this.fuse = new Fuse(this.items, this.searchOptions)
+    this.createItemLabels(this.items)
     if (this.preSelectedItem) {
       this.selectedItem = this.preSelectedItem
     }
@@ -305,28 +304,31 @@ export default{
     },
     isSelected: function (i) {
       return i === this.arrowCounter
+    },
+    createItemLabels: function (items) {
+      for (var itemCount in items) {
+          var item = items[itemCount]
+          item.fuzzySearchboxLabel = this.createLabel(item)
+          if (this.labelSearchRuleExists()) {
+            item.fuzzySearchboxSearchLabel = this.searchByLabelRuleFunction(item.fuzzySearchboxLabel)
+          }
+        }
+        this.results = items
+        this.isLoading = false
+        this.fuse = new Fuse(items, this.searchOptions)
     }
   },
 
   watch: {
     items: function onItemsChange (val, oldValue) {
       if (!isEqual(val, oldValue)) {
-        for (var itemCount in val) {
-          var item = val[itemCount]
-          item.fuzzySearchboxLabel = this.createLabel(item)
-          if (this.labelSearchRuleExists) {
-            item.fuzzySearchboxSearchLabel = this.searchByLabelRuleFunction(item.fuzzySearchboxLabel)
-          }
-        }
-        this.results = val
-        this.isLoading = false
-        this.fuse = new Fuse(val, this.searchOptions)
+        this.createItemLabels(val)
       }
     },
     itemKeys: function onItemKeysChange (val, oldValue) {
       if (!isEqual(val, oldValue)) {
         if (this.searchByLabel) {
-          this.searchOptions.keys = this.labelSearchRuleExists ? ['fuzzySearchboxSearchLabel'] : ['fuzzySearchboxLabel']
+          this.searchOptions.keys = this.labelSearchRuleExists() ? ['fuzzySearchboxSearchLabel'] : ['fuzzySearchboxLabel']
         } else {
           this.searchOptions.keys = this.itemKeys
         }
