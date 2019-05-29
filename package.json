@@ -1,7 +1,9 @@
 {
   "name": "fuzzy-searchbox",
-  "version": "1.0.10",
-  "description": "",
+  "private": false,
+  "version": "1.0.11",
+  "description": "An accessible, screen reader friendly combobox with fuzzy searching",
+  "author": "Gregory Zhenin",
   "main": "dist/fuzzy-searchbox.umd.js",
   "module": "dist/fuzzy-searchbox.esm.js",
   "unpkg": "dist/fuzzy-searchbox.min.js",
@@ -43,5 +45,14 @@
     "accessible",
     "screen reader",
     "fuzzy"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GregOSP/fuzzy-searchbox.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GregOSP/fuzzy-searchbox/issues"
+  },
+  "homepage": "https://github.com/GregOSP/fuzzy-searchbox#readme"
 }

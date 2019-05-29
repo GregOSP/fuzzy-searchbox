@@ -1,14 +1,12 @@
 <template>
-  <div
-    class="fuzzy-searchbox skiptranslate notranslate"
-    role="combobox"
-    aria-haspopup="listbox"
-    aria-owns="autocomplete-results"
-    :aria-expanded="isOpen"
-  >
+  <div class="fuzzy-searchbox">
     <input
+      class="fuzzy-searchbox skiptranslate notranslate autocomplete-input"
+      aria-haspopup="listbox"
+      aria-owns="autocomplete-results"
+      :aria-expanded="isOpen"
+      role="combobox"
       :placeholder="placeholder"
-      class="autocomplete-input"
       type="text"
       spellcheck="false"
       @input="onChange"
@@ -16,12 +14,11 @@
       ref="input"
       @keydown.down="onArrowDown"
       @keydown.up="onArrowUp"
-      @keyup.enter="onEnter"
-      @keyup.escape="onLeave"
+      @keydown.enter="onEnter"
+      @keydown.escape="onLeave"
       @focus="onClick"
       @blur="onLeave"
       aria-multiline="false"
-      role="searchbox"
       aria-autocomplete="list"
       aria-controls="autocomplete-results"
       :aria-label="ariaLabel"
@@ -123,6 +120,15 @@ export default{
     placeholder: {
       type: String,
       required: false
+    },
+    maxItemsDisplayed: {
+      type: Number,
+      required: false
+    },
+    showDefaultResults: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
 
@@ -131,8 +137,9 @@ export default{
       isOpen: false,
       results: [],
       searchTerm: '',
+      activedescendant: 'result-item-0',
       isLoading: false,
-      arrowCounter: -1,
+      arrowCounter: 0,
       selectedItem: {},
       searchOptions: {
         shouldSort: true,
@@ -205,8 +212,13 @@ export default{
       }
     },
     filterResults: function () {
-      if (this.searchTerm === '') {
-        this.results = this.items
+      if (!this.searchTerm) {
+        if (this.showDefaultResults) {
+          this.results = this.maxItemsDisplayed ? this.items.slice(0, this.maxItemsDisplayed) : this.items
+          this.isLoading = false
+        } else {
+          this.isOpen = false
+        }
       } else {
         var search = this.searchTerm
         if (!this.searchOptions.matchAllTokens) {
@@ -216,9 +228,9 @@ export default{
         } else {
           search = search.trim()
         }
-        this.results = this.fuse.search(search)
+        this.results = this.maxItemsDisplayed ? this.fuse.search(search).slice(0, this.maxItemsDisplayed) : this.fuse.search(search)
+        this.isLoading = false
       }
-      this.isLoading = false
     },
     setResult: function (result) {
       // this.search = this.itemKey ? result[this.itemKey] : result
@@ -268,7 +280,7 @@ export default{
       if (this.isOpen) {
         if (this.arrowCounter > -1) {
           this.setResult(this.results[this.arrowCounter])
-          this.arrowCounter = -1
+          this.arrowCounter = 0
         } else {
           this.resetSearchTerm()
         }
@@ -278,14 +290,14 @@ export default{
     onLeave: function () {
       setTimeout(() => {
         this.isOpen = false
-        this.arrowCounter = -1
+        this.arrowCounter = 0
         this.resetSearchTerm()
       }, 300)
     },
     handleClickOutside: function (evt) {
       if (!this.$el.contains(evt.target) && this.isOpen) {
         this.isOpen = false
-        this.arrowCounter = -1
+        this.arrowCounter = 0
         this.resetSearchTerm()
       }
     },
@@ -307,15 +319,14 @@ export default{
     },
     createItemLabels: function (items) {
       for (var itemCount in items) {
-          var item = items[itemCount]
-          item.fuzzySearchboxLabel = this.createLabel(item)
-          if (this.labelSearchRuleExists()) {
-            item.fuzzySearchboxSearchLabel = this.searchByLabelRuleFunction(item.fuzzySearchboxLabel)
-          }
+        var item = items[itemCount]
+        item.fuzzySearchboxLabel = this.createLabel(item)
+        if (this.labelSearchRuleExists()) {
+          item.fuzzySearchboxSearchLabel = this.searchByLabelRuleFunction(item.fuzzySearchboxLabel)
         }
-        this.results = items
-        this.isLoading = false
-        this.fuse = new Fuse(items, this.searchOptions)
+      }
+      this.isLoading = false
+      this.fuse = new Fuse(items, this.searchOptions)
     }
   },
 

@@ -20,6 +20,8 @@ Notes:
   - 'preSelectedItem' should be set if there are events that pass an item selection into the FuzzySearchbox module from outside
   - This compenent requires an aria-label to be set
   - Optionally set 'placeholder' as text when the input box is empty
+  - Optional: set 'max-items-displayed' to limit the number of search results
+  - Optional: set 'show-default-results' to false to prevent the search results box from opening when the input is empty
 
 #Github
 ```
@@ -49,6 +51,8 @@ import FuzzySearchbox from fuzzy-searchbox
   :item-keys="['name', 'type', 'category']"
   :searchByLabel = "true"
   :searchByLabelRuleFunction = "labelModificationFunction"
-  :create-label-function="displayStringForLabel">
+  :create-label-function="displayStringForLabel"
+  :max-items-displayed = 10
+  :show-default-results = "true">
 </FuzzySearchbox>
 ```
