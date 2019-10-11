@@ -1,11 +1,11 @@
 <template>
-  <div class="fuzzy-searchbox">
+  <div class="fuzzy-searchbox" 
+    role="combobox" 
+    :aria-expanded="`${isOpen}`" 
+    aria-owns="autocomplete-results"
+    aria-haspopup="listbox">
     <input
       class="fuzzy-searchbox skiptranslate notranslate autocomplete-input"
-      aria-haspopup="listbox"
-      aria-owns="autocomplete-results"
-      :aria-expanded="isOpen"
-      role="combobox"
       :placeholder="placeholder"
       type="text"
       spellcheck="false"
@@ -18,7 +18,6 @@
       @keydown.escape="onLeave"
       @focus="onClick"
       @blur="onLeave"
-      aria-multiline="false"
       aria-autocomplete="list"
       aria-controls="autocomplete-results"
       :aria-label="ariaLabel"
@@ -29,6 +28,7 @@
     />
     <ul
       id="autocomplete-results"
+      :aria-label="ariaLabel"
       ref="autocomplete-results"
       v-show="isOpen"
       class="autocomplete-results"
@@ -137,7 +137,7 @@ export default{
       isOpen: false,
       results: [],
       searchTerm: '',
-      activedescendant: 'result-item-0',
+      activedescendant: null,
       isLoading: false,
       arrowCounter: 0,
       selectedItem: {},
@@ -299,6 +299,7 @@ export default{
         this.isOpen = false
         this.arrowCounter = 0
         this.resetSearchTerm()
+        this.activedescendant = null
       }
     },
     resetSearchTerm: function () {
