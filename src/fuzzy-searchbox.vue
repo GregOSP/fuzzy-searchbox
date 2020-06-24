@@ -285,6 +285,8 @@ export default{
           this.resetSearchTerm()
         }
         this.isOpen = false
+      } else {
+        this.isOpen = true
       }
     },
     onLeave: function () {
@@ -296,10 +298,7 @@ export default{
     },
     handleClickOutside: function (evt) {
       if (!this.$el.contains(evt.target) && this.isOpen) {
-        this.isOpen = false
-        this.arrowCounter = 0
-        this.resetSearchTerm()
-        this.activedescendant = null
+        this.onLeave()
       }
     },
     resetSearchTerm: function () {
@@ -335,6 +334,7 @@ export default{
     items: function onItemsChange (val, oldValue) {
       if (!isEqual(val, oldValue)) {
         this.createItemLabels(val)
+        this.results = []
       }
     },
     itemKeys: function onItemKeysChange (val, oldValue) {
