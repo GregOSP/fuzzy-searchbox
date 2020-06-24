@@ -1,7 +1,7 @@
 {
   "name": "fuzzy-searchbox",
   "private": false,
-  "version": "1.0.13",
+  "version": "1.1.2",
   "description": "An accessible, screen reader friendly combobox with fuzzy searching",
   "author": "Gregory Zhenin",
   "main": "dist/fuzzy-searchbox.umd.js",
