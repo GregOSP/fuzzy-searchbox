@@ -22,6 +22,7 @@ Notes:
   - Optionally set 'placeholder' as text when the input box is empty
   - Optional: set 'max-items-displayed' to limit the number of search results
   - Optional: set 'show-default-results' to false to prevent the search results box from opening when the input is empty
+  - Optional: set 'persist-search' to false reset the search string after the user makes a selection, showing the default results next time they click
 
 #Github
 ```

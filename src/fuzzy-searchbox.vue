@@ -129,6 +129,11 @@ export default{
       type: Boolean,
       required: false,
       default: true
+    },
+    persistSearch: {
+      type: Boolean,
+      required: false,
+      default: true
     }
   },
 
@@ -192,8 +197,14 @@ export default{
       if (!this.isOpen) {
         this.isOpen = true
         this.$refs['input'].select()
-        if (this.results.length === 0) {
+        if (this.results.length === 0 && this.persistSearch) {
           this.filterResults()
+        } else if (!this.persistSearch) {
+          if (this.showDefaultResults) {
+            this.results = this.maxItemsDisplayed ? this.items.slice(0, this.maxItemsDisplayed) : this.items
+          } else {
+            this.isOpen = false
+          }
         }
       }
     },
