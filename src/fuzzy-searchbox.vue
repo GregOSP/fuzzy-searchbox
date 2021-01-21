@@ -1,9 +1,11 @@
 <template>
-  <div class="fuzzy-searchbox" 
+  <div 
+    class="fuzzy-searchbox"
     role="combobox" 
     :aria-expanded="`${isOpen}`" 
     aria-owns="autocomplete-results"
-    aria-haspopup="listbox">
+    aria-haspopup="listbox"
+  >
     <input
       class="fuzzy-searchbox skiptranslate notranslate autocomplete-input"
       :placeholder="placeholder"
@@ -56,8 +58,22 @@
       {{ result.fuzzySearchboxLabel }}
       </li>
     </ul>
+    <div
+      class="dropdown-arrow-container"
+    >
+      <svg
+        v-if="showDropdownArrow"
+        class="dropdown-arrow"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+      >
+        <path fill="none" d="M0 0h24v24H0V0z"/>
+        <path d="M8.71 11.71l2.59 2.59c.39.39 1.02.39 1.41 0l2.59-2.59c.63-.63.18-1.71-.71-1.71H9.41c-.89 0-1.33 1.08-.7 1.71z"/>
+      </svg>
+    </div>
   </div>
 </template>
+
 <script>
 import Fuse from 'fuse.js'
 import throttle from 'lodash/throttle'
@@ -134,6 +150,11 @@ export default{
       type: Boolean,
       required: false,
       default: true
+    },
+    showDropdownArrow: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
 
@@ -423,4 +444,18 @@ export default{
 .autocomplete-input {
   width: inherit;
 }
+
+.dropdown-arrow {
+  pointer-events: none;
+}
+
+.dropdown-arrow-container {
+    position: absolute;
+    height: 100%;
+    right: 0px;
+    top: 0px;
+    width: 5%;
+    pointer-events: none;
+}
+
 </style>
