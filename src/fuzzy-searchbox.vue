@@ -60,9 +60,11 @@
     </ul>
     <div
       class="dropdown-arrow-container"
+      v-if="showDropdownArrow || showDropdownArrowSharp"
+      :class="{'sharp' : showDropdownArrowSharp}"
     >
       <svg
-        v-if="showDropdownArrow"
+        v-if="!showDropdownArrowSharp"
         class="dropdown-arrow"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -152,6 +154,11 @@ export default{
       default: true
     },
     showDropdownArrow: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    showDropdownArrowSharp: {
       type: Boolean,
       required: false,
       default: false
@@ -451,12 +458,24 @@ export default{
 }
 
 .dropdown-arrow-container {
-    position: absolute;
-    height: 100%;
-    right: 0px;
-    top: 0px;
-    width: 5%;
-    pointer-events: none;
+  position: absolute;
+  height: 100%;
+  right: 0px;
+  top: 0px;
+  width: 5%;
+  pointer-events: none;
+}
+
+.dropdown-arrow-container.sharp{
+  font-size: 9px;
+  display: flex;
+  justify-content: center;
+}
+
+.dropdown-arrow-container.sharp:after{
+  content: "\0025BC";
+  display: flex;
+  align-items: center;
 }
 
 </style>
