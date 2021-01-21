@@ -447,6 +447,7 @@ export default{
 
 .dropdown-arrow {
   pointer-events: none;
+  fill: currentColor;
 }
 
 .dropdown-arrow-container {
