@@ -23,6 +23,8 @@ Notes:
   - Optional: set 'max-items-displayed' to limit the number of search results
   - Optional: set 'show-default-results' to false to prevent the search results box from opening when the input is empty
   - Optional: set 'persist-search' to false reset the search string after the user makes a selection, showing the default results next time they click
+  - Optional: set 'show-dropdown-arrow' to true to display an svg arrow at the right of the searchbox
+  - Optional: set 'show-dropdown-arrow-sharp' to true to display a pseudo-element with a sharp arrow at the right of the searchbox
 
 #Github
 ```
